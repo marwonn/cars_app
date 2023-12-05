@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medizinische Kategorien</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .category {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .category:hover {
+            background-color: #e0f2f1;
+        }
+
+        .sub-categories {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .sub-category {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .sub-category:hover {
+            background-color: #eeeeee;
+        }
+
+        .text-field {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #closeSubcategoriesButton, #resetButton {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #closeSubcategoriesButton:hover, #resetButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<header class="text-white">
+    <h1>Carstens Kategorien</h1>
+</header>
+
+<div class="container categories">
+    <div class="category" onclick="toggleSubCategories('category1')">Erkältungskrankheiten</div>
+    <div class="sub-categories" id="category1">
+        <div class="sub-category" onclick="showTextField('text1')">Husten</div>
+        <div class="sub-category" onclick="showTextField('text2')">Schnupfen</div>
+        <!-- Weitere Unterkategorien hier -->
+    </div>
+
+    <div class="category" onclick="toggleSubCategories('category2')">Sonstiges</div>
+    <div class="sub-categories" id="category2">
+        <div class="sub-category" onclick="showTextField('text3')">Carsten</div>
+        <!-- Weitere Unterkategorien hier -->
+    </div>
+
+    <!-- Weitere Kategorien und Unterkategorien hier -->
+</div>
+
+<!-- Textfelder außerhalb der Kategorien -->
+<div class="container text-field" id="text1" data-comment=""></div>
+<div class="container text-field" id="text2" data-comment=""></div>
+<div class="container text-field" id="text3" data-comment=""></div>
+<!-- Weitere Textfelder hier -->
+
+<div class="container d-flex justify-content-center">
+    <button class="btn btn-success" id="closeSubcategoriesButton" onclick="closeAllSubCategories()">Alle schließen</button>
+</div>
+
+<!-- Bootstrap JS und Popper.js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    var lastClickedCategoryId = '';
+
+    // Laden der Beispieltexte aus einer JSON-Datei
+    function loadExampleText(textId) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var exampleTexts = JSON.parse(xhr.responseText);
+                var exampleText = exampleTexts[textId] && exampleTexts[textId].content;
+                var comment = exampleTexts[textId] && exampleTexts[textId].comment;
+                document.getElementById(textId).innerHTML = exampleText || 'Kein Beispieltext vorhanden.';
+                document.getElementById(textId).setAttribute('data-comment', comment || 'Kein Kommentar vorhanden.');
+            }
+        };
+        xhr.open("GET", "exampleTexts.json", true);
+        xhr.send();
+    }
+
+    function toggleSubCategories(categoryId) {
+        var selectedSubCategory = document.getElementById(categoryId);
+        if (lastClickedCategoryId === categoryId && selectedSubCategory.style.display !== 'none') {
+            selectedSubCategory.style.display = 'none';
+            lastClickedCategoryId = '';
+            closeTextField();
+        } else {
+            // Verstecke alle Unterkategorien
+            var subCategories = document.querySelectorAll('.sub-categories');
+            subCategories.forEach(function (subCategory) {
+                subCategory.style.display = 'none';
+            });
+
+            // Zeige die Unterkategorien der ausgewählten Kategorie
+            selectedSubCategory.style.display = 'flex';
+            lastClickedCategoryId = categoryId;
+        }
+    }
+
+    function showTextField(textId) {
+        // Verstecke alle Textfelder
+        var textFields = document.querySelectorAll('.text-field');
+        textFields.forEach(function (textField) {
+            textField.style.display = 'none';
+        });
+
+        // Zeige das Textfeld der ausgewählten Unterkategorie
+        var selectedTextField = document.getElementById(textId);
+        selectedTextField.style.display = 'block';
+
+        // Lade den Beispieltext für die ausgewählte Unterkategorie
+        loadExampleText(textId);
+    }
+
+    function closeAllSubCategories() {
+        // Verstecke alle Unterkategorien
+        var subCategories = document.querySelectorAll('.sub-categories');
+        subCategories.forEach(function (subCategory) {
+            subCategory.style.display = 'none';
+        });
+
+        // Verstecke alle Textfelder
+        closeTextField();
+    }
+
+    function closeTextField() {
+        var textFields = document.querySelectorAll('.text-field');
+        textFields.forEach(function (textField) {
+            textField.style.display = 'none';
+        });
+    }
+</script>
+
+</body>
+</html>

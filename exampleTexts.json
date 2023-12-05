@@ -1,0 +1,14 @@
+{
+  "text1": {
+      "content": "Husten ist ein wichtiger Schutzreflex: Er befördert Schmutzpartikel, andere Fremdkörper und Schleim aus den Atemwegen und kann so vor Infektionen und Lungenschäden schützen. Als Symptom tritt er bei einer Vielzahl von Krankheiten auf. Meist ist Husten harmlos und klingt nach wenigen Wochen ab.Ausgelöst wird Husten durch spezielle Zellen (Rezeptoren) auf der Schleimhaut von Rachen, Kehlkopf, Bronchien und deren Verzweigungen. Werden sie durch Fremdkörper, Schleim, Rauch oder Gas gereizt, senden sie Signale zum Gehirn, die den Hustenreflex auslösen. Manchmal reichen dafür bereits Kälte, trockene Luft oder Sprechen aus.",
+      "comment": "Husten"
+  },
+  "text2": {
+      "content": "Eine akute Rhinitis, die auch als Schnupfen oder Nasenkatarrh bezeichnet wird, ist eine infektiöse Entzündung der Nasenschleimhaut. Schnupfen tritt als Hauptsymptom einer Erkältung bzw. eines grippalen Infekts auf, der häufigsten Infektionskrankheit überhaupt. Es sind über 200 verschiedene Viren bekannt, die Schnupfen verursachen können. Diese enorme Vielfalt der Erreger verhindert bisher die Entwicklung eines Impfstoffes. Anders als oft vermutet wird, ist die Grippe-Impfung gegen die akute Rhinitis wirkungslos. Da eine Infektion keine Immunität hinterlässt, ist jeder Mensch mehrmals betroffen.",
+      "comment": "Schnupfen"
+  },
+  "text3": {
+      "content": "Hallo Carsten, hier könnte etwas stehen.",
+      "comment": "Beispiel"
+  }
+}
